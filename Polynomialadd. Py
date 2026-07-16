@@ -1,0 +1,80 @@
+class Node:
+    def __init__(self, coeff, power):
+        self.coeff = coeff
+        self.power = power
+        self.next = None
+
+
+def insert(head, coeff, power):
+    new = Node(coeff, power)
+
+    if head is None:
+        return new
+
+    temp = head
+    while temp.next:
+        temp = temp.next
+    temp.next = new
+    return head
+
+
+def add_poly(p, q):
+    result = None
+
+    while p and q:
+        if p.power == q.power:
+            s = p.coeff + q.coeff
+            if s != 0:
+                result = insert(result, s, p.power)
+            p = p.next
+            q = q.next
+
+        elif p.power > q.power:
+            result = insert(result, p.coeff, p.power)
+            p = p.next
+
+        else:
+            result = insert(result, q.coeff, q.power)
+            q = q.next
+
+    while p:
+        result = insert(result, p.coeff, p.power)
+        p = p.next
+
+    while q:
+        result = insert(result, q.coeff, q.power)
+        q = q.next
+
+    return result
+
+
+def display(head):
+    while head:
+        print(f"{head.coeff}x^{head.power}", end="")
+        if head.next:
+            print(" + ", end="")
+        head = head.next
+    print()
+
+
+# Polynomial 1: 5x^2 - 4x + 2
+p = None
+p = insert(p, 5, 2)
+p = insert(p, -4, 1)
+p = insert(p, 2, 0)
+
+# Polynomial 2: -3x^3 + 2x + 1
+q = None
+q = insert(q, -3, 3)
+q = insert(q, 2, 1)
+q = insert(q, 1, 0)
+
+print("Polynomial 1:")
+display(p)
+
+print("Polynomial 2:")
+display(q)
+
+print("Sum Polynomial:")
+result = add_poly(p, q)
+display(result)
