@@ -1,0 +1,24 @@
+from collections import deque
+
+a = deque()
+
+def palindrome(str):
+    l = []
+    
+    for ch in str:
+        if ch.isalnum():
+            l.append(ch.lower())
+            a.append(ch.lower())
+    
+    while len(a) > 1:
+        if l.pop() != a.popleft():
+            return False
+    
+    return True
+
+str = input("Enter a string: ")
+
+if palindrome(str):
+    print(str, "is a palindrome")
+else:
+    print(str, "is not a palindrome")
