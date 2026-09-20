@@ -1,0 +1,81 @@
+class Cars:
+    def __init__(self,car):
+        self.data=car
+        self.next=None
+
+class Parking:
+    def __init__(self):
+        self.front=None
+        self.rear=None
+   
+    def is_empty(self):
+        return self.front is None
+   
+    def enqueue(self,car):
+        new_node=Cars(car)
+        if self.front is None:
+            self.front=self.rear=new_node
+            return
+        self.rear.next=new_node
+        self.rear=new_node
+    def dequeue(self):
+        if self.is_empty():
+            return None
+        data=self.front.data
+        if self.front is None:
+            self.rear=None
+        return
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.front.data
+    def size(self):
+        count=0
+        current=self.front
+        while current:
+            count+=1
+            current=current.next
+        return count
+    def display(self):
+        if self.is_empty():
+            print("Parking is empty.")
+            return
+        print("\n Parking Space:")
+        current=self.front
+        while current is not None:
+            print(f"[{current.data}]->",end="")
+            current=current.next
+        print("NULL \n")
+ob=Parking()
+while True:
+    print("1. Car Entry to parking")
+    print("2. Car Exit")
+    print("3. First Car")
+    print("4. Check whether the parking is empty")
+    print("5. Size of parking")
+    print("6. Displaying all the cars in the parking")
+    print("7. Exiting the program")
+    ch=input("Enter your choice! :")
+    if ch=='1':
+        a=input("Enter car no.plate:")
+        ob.enqueue(a)
+    elif ch=='2':
+        b=ob.dequeue()
+        print("Car exited")
+    elif ch=='3':
+        c=ob.peek()
+        print(c)
+    elif ch=='4':
+        d=ob.is_empty()
+        print(d)
+    elif ch=='5':
+        f=ob.size()
+        print(f)
+    elif ch=='6':
+        f=ob.display()
+        print(f)
+    elif ch=='7':    
+        print("Exiting the program")
+        break
+    else:
+        print("Invalid Input")
