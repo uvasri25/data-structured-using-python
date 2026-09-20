@@ -1,0 +1,87 @@
+class Node:
+    def __init__(self, name, time, purpose):
+        self.name = name
+        self.time = time
+        self.purpose = purpose
+        self.left = None
+        self.right = None
+
+
+def insert(root, name, time, purpose):
+    if root is None:
+        return Node(name, time, purpose)
+
+    if name < root.name:
+        root.left = insert(root.left, name, time, purpose)
+    else:
+        root.right = insert(root.right, name, time, purpose)
+
+    return root
+
+
+def search(root, name):
+    if root is None:
+        return None
+
+    if root.name == name:
+        return root
+    elif name < root.name:
+        return search(root.left, name)
+    else:
+        return search(root.right, name)
+
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.name, root.time, root.purpose)
+        inorder(root.right)
+
+
+def count(root):
+    if root is None:
+        return 0
+    return 1 + count(root.left) + count(root.right)
+
+
+root = None
+
+while True:
+    print("\n1. Insert")
+    print("2. Search")
+    print("3. Display")
+    print("4. Count")
+    print("5. Exit")
+
+    ch = input("Enter your choice: ")
+
+    if ch == '1':
+        name = input("Enter visitor name: ")
+        time = input("Enter entry time: ")
+        purpose = input("Enter purpose: ")
+        root = insert(root, name, time, purpose)
+        print("Entry inserted")
+
+    elif ch == '2':
+        name = input("Enter visitor name: ")
+        result = search(root, name)
+
+        if result:
+            print("Visitor found")
+            print(result.name, result.time, result.purpose)
+        else:
+            print("Visitor not found")
+
+    elif ch == '3':
+        print("Visitor Log:")
+        inorder(root)
+
+    elif ch == '4':
+        print("Total entries:", count(root))
+
+    elif ch == '5':
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid choice")
